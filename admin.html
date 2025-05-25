@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,6 +7,7 @@
     body { font-family: 'Segoe UI', sans-serif; padding: 30px; background: #f0f4f8; color: #333; }
     h1 { font-size: 28px; margin-bottom: 10px; }
     h2 { margin-top: 40px; }
+    h3 { margin-top: 20px; font-size: 20px; }
     .summary { font-size: 18px; margin-bottom: 20px; }
     .online { font-weight: bold; color: green; }
     table { border-collapse: collapse; width: 100%; margin-top: 10px; background: white; }
@@ -32,6 +32,7 @@
         .then(res => res.json())
         .then(data => {
           console.log("📦 전체 통계 데이터:", data);
+
           let totalVisits = 0;
           let totalClicks = 0;
           let html = "";
@@ -53,15 +54,17 @@
           document.getElementById("total-visits").innerText = totalVisits;
           document.getElementById("total-clicks").innerText = totalClicks;
 
-          // 클릭 로그 테이블 추가
-          const today = new Date().toISOString().slice(0,10);
-          const logs = (data.clickLogs && data.clickLogs[today]) || [];
-          let logHTML = "<h2>🕒 클릭 로그</h2><table><tr><th>시간</th><th>UDD</th></tr>";
-          for (let i = logs.length - 1; i >= 0; i--) {
-            const log = logs[i];
-            logHTML += `<tr><td>${log.time}</td><td>${log.udd}</td></tr>`;
+          // 🔁 클릭 로그 전체 날짜 출력
+          let logHTML = "<h2>🕒 클릭 로그</h2>";
+          for (const date in data.clickLogs || {}) {
+            logHTML += `<h3>${date}</h3><table><tr><th>시간</th><th>UDD</th></tr>`;
+            const logs = data.clickLogs[date];
+            for (let i = logs.length - 1; i >= 0; i--) {
+              const log = logs[i];
+              logHTML += `<tr><td>${log.time}</td><td>${log.udd}</td></tr>`;
+            }
+            logHTML += "</table>";
           }
-          logHTML += "</table>";
           document.getElementById("click-logs").innerHTML = logHTML;
         });
     }
