@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,44 +6,63 @@
   <meta charset="UTF-8">
   <style>
     body { font-family: sans-serif; padding: 30px; background: #f9f9f9; }
-    #content { display: none; }
-    .label { font-weight: bold; margin-top: 10px; }
+    h2 { margin-top: 40px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f0f0f0; }
   </style>
 </head>
 <body>
 
-<div id="content">
-  <h1>📊 통계 대시보드</h1>
-  <div class="label">총 방문자 수:</div>
-  <div id="visits">불러오는 중...</div>
-
-  <div class="label">총 클릭 수:</div>
-  <div id="clicks">불러오는 중...</div>
-</div>
+  <div id="content" style="display: none;">
+    <h1>📊 실시간 통계 대시보드</h1>
+    <div id="summary">로딩 중...</div>
+    <div id="tables"></div>
+  </div>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const pw = prompt("관리자 비밀번호를 입력하세요");
-    if (pw !== "1234") {
-      document.body.innerHTML = "<h2 style='color:red;'>⛔ 접근 불가: 비밀번호가 틀렸습니다.</h2>";
-      throw new Error("Unauthorized");
-    } else {
-      document.getElementById("content").style.display = "block";
+function renderStats(data) {
+  let totalVisits = 0;
+  let totalClicks = 0;
+  let html = "";
 
-      // ✅ 백엔드 Render 주소에 맞춰 fetch
-      fetch("https://backend123-9sur.onrender.com/api/stats")
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById("visits").innerText = data.visits;
-          document.getElementById("clicks").innerText = data.clicks;
-        })
-        .catch(err => {
-          console.error("API 호출 실패:", err);
-          document.getElementById("visits").innerText = "불러오기 실패";
-          document.getElementById("clicks").innerText = "불러오기 실패";
-        });
+  for (const date in data.visits) {
+    html += `<h2>${date}</h2><table><tr><th>시간</th><th>방문자</th><th>클릭수</th></tr>`;
+    const hours = data.visits[date];
+    for (const hour in hours) {
+      const v = hours[hour] || 0;
+      const c = (data.clicks[date] && data.clicks[date][hour]) || 0;
+      totalVisits += v;
+      totalClicks += c;
+      html += `<tr><td>${hour}</td><td>${v}</td><td>${c}</td></tr>`;
     }
-  });
+    html += `</table>`;
+  }
+
+  document.getElementById("summary").innerHTML = `✅ 총 방문자: <b>${totalVisits}</b>명 / 총 클릭: <b>${totalClicks}</b>회`;
+  document.getElementById("tables").innerHTML = html;
+}
+
+function loadStats() {
+  fetch("https://backend123-9sur.onrender.com/api/stats")
+    .then(res => res.json())
+    .then(renderStats)
+    .catch(() => {
+      document.getElementById("summary").innerText = "❌ 데이터 불러오기 실패";
+      document.getElementById("tables").innerHTML = "";
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const pw = prompt("관리자 비밀번호를 입력하세요");
+  if (pw !== "1234") {
+    document.body.innerHTML = "<h2 style='color:red;'>⛔ 접근 불가: 비밀번호가 틀렸습니다.</h2>";
+    throw new Error("Unauthorized");
+  }
+  document.getElementById("content").style.display = "block";
+  loadStats();
+  setInterval(loadStats, 5000);
+});
 </script>
 
 </body>
