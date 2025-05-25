@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,21 +25,25 @@
 </head>
 <body>
 
-  <!-- ✅ 클릭 시 클릭 수 기록 + 링크 이동 -->
+  <!-- ✅ 클릭 시 클릭 수 기록 후 새 창 열기 -->
   <a href="https://vvd.im/행복지안" target="_blank"
-   onclick="fetch('https://anan14.onrender.com/api/visit', { method: 'POST' }); return true;">
-  <img src="images/랜딩용.png" alt="행복나눔 이지안">
+     onclick="event.preventDefault();
+              fetch('https://anan14.onrender.com/api/click', { method: 'POST' })
+                .then(() => window.open('https://vvd.im/행복지안', '_blank'));"
+  >
+    <img src="images/랜딩용.png" alt="행복나눔 이지안">
   </a>
 
-
-  <!-- ✅ 방문자 수 기록 -->
+  <!-- ✅ 방문자 기록 -->
   <script>
     fetch("https://anan14.onrender.com/api/visit", { method: "POST" });
 
-    // (선택) 서버 절전 모드 방지 - 5분마다 깨우기
-    setInterval(() => {
-      fetch("https://anan14.onrender.com/api/visit");
-    }, 1000 * 60 * 5);
+    // ✅ 온라인 사용자 ping (5초마다)
+    function pingOnline() {
+      fetch("https://anan14.onrender.com/api/online", { method: "POST" });
+    }
+    pingOnline();
+    setInterval(pingOnline, 5000);
   </script>
 
 </body>

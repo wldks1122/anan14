@@ -1,69 +1,74 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-  <title>관리자 통계</title>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <title>통계 대시보드</title>
   <style>
-    body { font-family: sans-serif; padding: 30px; background: #f9f9f9; }
+    body { font-family: 'Segoe UI', sans-serif; padding: 30px; background: #f0f4f8; color: #333; }
+    h1 { font-size: 28px; margin-bottom: 10px; }
     h2 { margin-top: 40px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 10px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background-color: #f0f0f0; }
+    .summary { font-size: 18px; margin-bottom: 20px; }
+    .online { font-weight: bold; color: green; }
+    table { border-collapse: collapse; width: 100%; margin-top: 10px; background: white; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background-color: #f9f9f9; }
   </style>
 </head>
 <body>
 
-  <div id="content" style="display: none;">
-    <h1>📊 실시간 통계 대시보드</h1>
-    <div id="summary">로딩 중...</div>
-    <div id="tables"></div>
+  <h1>📊 실시간 통계 대시보드</h1>
+  <div class="summary">
+    🔄 현재 접속 중인 사용자: <span class="online" id="online-count">-</span>명<br>
+    ✅ 총 방문자: <b id="total-visits">-</b> / 총 클릭: <b id="total-clicks">-</b>
   </div>
 
-<script>
-function renderStats(data) {
-  let totalVisits = 0;
-  let totalClicks = 0;
-  let html = "";
+  <div id="tables">로딩 중...</div>
 
-  for (const date in data.visits) {
-    html += `<h2>${date}</h2><table><tr><th>시간</th><th>방문자</th><th>클릭수</th></tr>`;
-    const hours = data.visits[date];
-    for (const hour in hours) {
-      const v = hours[hour] || 0;
-      const c = (data.clicks[date] && data.clicks[date][hour]) || 0;
-      totalVisits += v;
-      totalClicks += c;
-      html += `<tr><td>${hour}</td><td>${v}</td><td>${c}</td></tr>`;
+  <script>
+    function loadStats() {
+      fetch("https://anan14.onrender.com/api/stats")
+        .then(res => res.json())
+        .then(data => {
+          let totalVisits = 0;
+          let totalClicks = 0;
+          let html = "";
+
+          for (const date in data.visits) {
+            html += `<h2>${date}</h2><table><tr><th>시간</th><th>방문자</th><th>클릭수</th></tr>`;
+            const hours = data.visits[date];
+            for (const hour in hours) {
+              const v = hours[hour] || 0;
+              const c = (data.clicks[date] && data.clicks[date][hour]) || 0;
+              totalVisits += v;
+              totalClicks += c;
+              html += `<tr><td>${hour}</td><td>${v}</td><td>${c}</td></tr>`;
+            }
+            html += "</table>";
+          }
+
+          document.getElementById("tables").innerHTML = html;
+          document.getElementById("total-visits").innerText = totalVisits;
+          document.getElementById("total-clicks").innerText = totalClicks;
+        });
     }
-    html += `</table>`;
-  }
 
-  document.getElementById("summary").innerHTML = `✅ 총 방문자: <b>${totalVisits}</b>명 / 총 클릭: <b>${totalClicks}</b>회`;
-  document.getElementById("tables").innerHTML = html;
-}
+    function loadOnline() {
+      fetch("https://anan14.onrender.com/api/online-count")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("online-count").innerText = data.count;
+        });
+    }
 
-function loadStats() {
-  fetch("https://anan14.onrender.com/api/stats")
-    .then(res => res.json())
-    .then(renderStats)
-    .catch(() => {
-      document.getElementById("summary").innerText = "❌ 데이터 불러오기 실패";
-      document.getElementById("tables").innerHTML = "";
-    });
-}
+    function autoUpdate() {
+      loadStats();
+      loadOnline();
+    }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const pw = prompt("관리자 비밀번호를 입력하세요");
-  if (pw !== "1234") {
-    document.body.innerHTML = "<h2 style='color:red;'>⛔ 접근 불가: 비밀번호가 틀렸습니다.</h2>";
-    throw new Error("Unauthorized");
-  }
-  document.getElementById("content").style.display = "block";
-  loadStats();
-  setInterval(loadStats, 5000);
-});
-</script>
+    autoUpdate();
+    setInterval(autoUpdate, 5000);
+  </script>
 
 </body>
 </html>
