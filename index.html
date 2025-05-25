@@ -27,20 +27,44 @@
 
   <!-- ✅ 클릭 시 클릭 수 기록 후 새 창 열기 -->
   <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault();
-              fetch('https://anan14.onrender.com/api/click', { method: 'POST' })
-                .then(() => window.open('https://vvd.im/행복지안', '_blank'));"
-  >
+     onclick="event.preventDefault(); recordClick();">
     <img src="images/랜딩용.png" alt="행복나눔 이지안">
   </a>
 
-  <!-- ✅ 방문자 기록 -->
   <script>
-    fetch("https://anan14.onrender.com/api/visit", { method: "POST" });
+    function getOrCreateUdd() {
+      let udd = localStorage.getItem("udd");
+      if (!udd) {
+        udd = "udd_" + Math.random().toString(36).substr(2, 10);
+        localStorage.setItem("udd", udd);
+      }
+      return udd;
+    }
 
-    // ✅ 온라인 사용자 ping (5초마다)
+    const udd = getOrCreateUdd();
+
+    fetch("https://anan14.onrender.com/api/visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ udd })
+    });
+
+    function recordClick() {
+      fetch("https://anan14.onrender.com/api/click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ udd })
+      }).then(() => {
+        window.open('https://vvd.im/행복지안', '_blank');
+      });
+    }
+
     function pingOnline() {
-      fetch("https://anan14.onrender.com/api/online", { method: "POST" });
+      fetch("https://anan14.onrender.com/api/online", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ udd })
+      });
     }
     pingOnline();
     setInterval(pingOnline, 5000);
