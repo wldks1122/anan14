@@ -24,6 +24,7 @@
   </div>
 
   <div id="tables">로딩 중...</div>
+  <div id="click-logs">로딩 중...</div>
 
   <script>
     function loadStats() {
@@ -50,6 +51,17 @@
           document.getElementById("tables").innerHTML = html;
           document.getElementById("total-visits").innerText = totalVisits;
           document.getElementById("total-clicks").innerText = totalClicks;
+
+          // 클릭 로그 테이블 추가
+          const today = new Date().toISOString().slice(0,10);
+          const logs = (data.clickLogs && data.clickLogs[today]) || [];
+          let logHTML = "<h2>🕒 클릭 로그</h2><table><tr><th>시간</th><th>UDD</th></tr>";
+          for (let i = logs.length - 1; i >= 0; i--) {
+            const log = logs[i];
+            logHTML += `<tr><td>${log.time}</td><td>${log.udd}</td></tr>`;
+          }
+          logHTML += "</table>";
+          document.getElementById("click-logs").innerHTML = logHTML;
         });
     }
 
