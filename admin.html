@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>관리자 통계</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: sans-serif; padding: 30px; background: #f9f9f9; }
+    #content { display: none; }
+    .label { font-weight: bold; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<div id="content">
+  <h1>📊 통계 대시보드</h1>
+  <div class="label">총 방문자 수:</div>
+  <div id="visits">불러오는 중...</div>
+
+  <div class="label">총 클릭 수:</div>
+  <div id="clicks">불러오는 중...</div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const pw = prompt("관리자 비밀번호를 입력하세요");
+    if (pw !== "1234") {
+      document.body.innerHTML = "<h2 style='color:red;'>⛔ 접근 불가: 비밀번호가 틀렸습니다.</h2>";
+      throw new Error("Unauthorized");
+    } else {
+      document.getElementById("content").style.display = "block";
+
+      // ✅ 백엔드 Render 주소에 맞춰 fetch
+      fetch("https://backend123.onrender.com/api/stats")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("visits").innerText = data.visits;
+          document.getElementById("clicks").innerText = data.clicks;
+        })
+        .catch(err => {
+          console.error("API 호출 실패:", err);
+          document.getElementById("visits").innerText = "불러오기 실패";
+          document.getElementById("clicks").innerText = "불러오기 실패";
+        });
+    }
+  });
+</script>
+
+</body>
+</html>
