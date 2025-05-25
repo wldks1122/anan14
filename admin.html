@@ -31,6 +31,7 @@
       fetch("https://anan14.onrender.com/api/stats")
         .then(res => res.json())
         .then(data => {
+          console.log("📦 전체 통계 데이터:", data);
           let totalVisits = 0;
           let totalClicks = 0;
           let html = "";
