@@ -1,116 +1,496 @@
+
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>행복나눔 이지안</title>
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>행복나눔 이지안</title>
+<link href="flipclock.css" rel="stylesheet"/>
+<style>
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      padding: 0;
-      background-color: #ffffff;
+      font-family: sans-serif;
+      background: #fff;
     }
-    a {
-      display: block;
+    nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: #fff;
+      z-index: 1000;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    nav ul {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0; margin: 0;
+      list-style: none;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+    section {
+  padding: 50px 20px 30px;
+  max-width: 800px;
+  margin: 0 auto;
+  border-top: 1px solid #eee;
+}
+    section:first-of-type { border-top: none; }
+    section img, section video {
       width: 100%;
+      display: block; pointer-events: auto; cursor: pointer;
+      margin: 0 auto 20px;
     }
-    .landing-img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
     }
-  </style>
+
+    .faq-item {
+      margin-bottom: 10px;
+    }
+    .faq-question {
+      background: #f2f2f2;
+      border: 1px solid #ccc;
+      padding: 15px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    .faq-answer {
+      display: none;
+      padding: 15px 20px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+    }
+
+    .cta-container {
+      position: relative;
+    }
+
+    .countdown-box {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  padding: 16px 24px;
+  background: #fffefc;
+  border: 6px solid #c2a080;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  white-space: nowrap;
+  overflow-x: auto;
+
+      position: absolute;
+      top: 58%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.88);
+      background-color: #fffefc;
+      border: 6px solid #c2a080;
+      border-radius: 18px;
+      padding: 16px 26px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+      z-index: 10;
+      white-space: nowrap;
+      width: fit-content;
+      max-width: 90%;
+      overflow-x: auto;
+    }
+
+    .flip-clock-wrapper {
+      display: inline-block;
+      white-space: nowrap;
+      transform: scale(1);
+      transform-origin: center;
+    }
+
+    .flip-clock-wrapper ul {
+      display: inline-block !important;
+      vertical-align: top;
+      margin: 2px;
+    }
+
+    @media (max-width: 450px) {
+      .countdown-box {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  padding: 16px 24px;
+  background: #fffefc;
+  border: 6px solid #c2a080;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  white-space: nowrap;
+  overflow-x: auto;
+
+        transform: translate(-50%, -50%) scale(0.8);
+        padding: 14px 20px;
+      }
+    }
+  
+/* 가로폭 넘침 방지 + 메뉴 고정 대응 */
+.countdown-box {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  padding: 16px 24px;
+  background: #fffefc;
+  border: 6px solid #c2a080;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  white-space: nowrap;
+  overflow-x: auto;
+
+  width: 100%;
+  max-width: 360px;
+  min-width: 320px;
+  margin: 0 auto;
+  overflow-x: auto;
+  white-space: nowrap;
+  transform: translateY(-50%);
+}
+
+.flip-clock-wrapper,
+.flip-clock-wrapper ul,
+.flip-clock-divider {
+  display: inline-block !important;
+  vertical-align: top;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+section#timer {
+  padding: 0;
+  position: relative;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.cta-container img {
+  width: 100%;
+  height: auto;
+  display: block; pointer-events: auto; cursor: pointer;
+}
+
+.cta-container {
+  position: relative;
+}
+.countdown-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+  max-width: 90%;
+  white-space: nowrap;
+  z-index: 10;
+}
+.flip-clock-wrapper,
+.flip-clock-wrapper ul,
+.flip-clock-divider {
+  display: inline-block !important;
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.countdown-box p {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+.countdown-box {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.clock {
+  display: flex;
+  justify-content: center;
+}
+
+.countdown-box .clock {
+  display: flex;
+  justify-content: center;
+}
+.flip-clock-wrapper {
+  margin: 0 auto;
+}
+
+.countdown-box .clock {
+  display: block; pointer-events: auto; cursor: pointer;
+  margin: 0 auto;
+}
+
+.flip-clock-wrapper {
+  text-align: center;
+  font-size: 0;
+}
+
+.flip-clock-wrapper ul {
+  font-size: 16px;
+}
+
+/* 완전 좌우 여백 제거 및 정렬 강제 */
+.flip-clock-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: auto !important;
+}
+
+.flip-clock-wrapper ul {
+  float: none !important;
+  width: auto !important;
+  margin: 0 2px !important;
+}
+
+.flip-clock-divider {
+  float: none !important;
+  width: auto !important;
+  margin: 0 2px !important;
+}
+
+.flip-clock-divider {
+  position: relative;
+  width: 24px !important;
+  margin: 0 6px !important;
+  height: 70px;
+}
+.flip-clock-dot {
+  background: #333 !important;
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.flip-clock-dot.top {
+  top: 30%;
+}
+.flip-clock-dot.bottom {
+  bottom: 25%;
+}
+
+
+.flip-clock-divider {
+  position: relative;
+  width: 18px !important;  /* 좌우 공간 줄임 */
+  margin: 0 4px !important; /* 간격 더 줄임 */
+  height: 70px;
+}
+.flip-clock-dot {
+  background: #333 !important;
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.flip-clock-dot.top {
+  top: 32%;  /* 살짝 더 내려줌 */
+}
+.flip-clock-dot.bottom {
+  bottom: 22%;
+}
+
+
+.countdown-box {
+  padding-left: 20px;
+  padding-right: 16px;
+}
+
+
+.countdown-box .clock {
+  margin-left: -8px;
+}
+
+
+.countdown-box .clock {
+  margin-left: -14px;
+}
+
+
+.countdown-box .clock {
+  margin-left: -6px;
+}
+.countdown-box p {
+  margin-bottom: 8px;
+  margin-top: -2px;
+}
+
+
+.countdown-box .clock {
+  margin-left: -9px;
+}
+.countdown-box p {
+  margin-bottom: 8px;
+  margin-top: -6px;
+}
+
+
+.countdown-box p {
+  margin-bottom: 8px;
+  margin-top: -11px;
+}
+
+nav ul li a {
+  color: #000 !important;
+  font-weight: 800;
+  font-size: 15px;
+}
+
+
+.countdown-box .clock {
+  margin-left: -14px;
+}
+.countdown-box p {
+  margin-bottom: 8px;
+  margin-top: -21px;
+}
+
+</style>
 </head>
 <body>
+<nav id="menu">
+<ul>
+<li><a href="#timer">번호받기</a></li>
+<li><a href="#intro">이지안 소개</a></li>
+<li><a href="#reviews">당첨 사진</a></li>
+<li><a href="#faq">FAQ</a></li>
+</ul>
+</nav>
+<!-- ✅ 타이머 섹션 -->
+<section id="timer">
+<video autoplay="" id="ctaVideo" muted="" onended="showClock()" playsinline="" style="width: 100%; display: block; pointer-events: auto; cursor: pointer;">
+<source src="images/cta_main.mp4" type="video/mp4"/>
+</video>
+<div class="cta-container" id="ctaFallback" style="display: none;">
+<img alt="마지막 장면" src="images/cta_final.webp" style="width: 100%;"/>
 
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/1.webp" alt="1" class="landing-img" loading="lazy">
+<a href="https://vvd.im/행복나눔지안" target="_blank"
+   style="
+     position: absolute;
+     bottom: 5%;
+     left: 50%;
+     transform: translateX(-50%);
+     width: 75%; max-width: none;
+     z-index: 20;
+     cursor: pointer;">
+  <img src="images/수정용.webp" alt="지금 번호받기 버튼" style="width: 100%;">
+</a>
+
+<div class="countdown-box">
+<p style="font-size: 20px; font-weight: 700; margin: 0; text-align: center;">마감 임박 시간</p>
+<div class="clock"></div>
+</div>
+</div>
+</section>
+<section id="intro">
+
+<img alt="소개 이미지 1" src="images/intro1.webp"/>
+<img alt="소개 이미지 2" src="images/intro2.webp"/>
+<img alt="후원증서 1" src="images/certificate1.webp"/>
+<img alt="후원증서 2" src="images/certificate2.webp"/>
+
+<a href="https://vvd.im/행복나눔지안" target="_blank">
+  <img src="images/final_cta.webp" alt="마무리 CTA 이미지" style="width: 100%; margin-top: 30px; border-radius: 12px;">
+</a>
+
+</section>
+<section id="reviews">
+
+<img alt="인증샷1" src="images/review1.webp"/>
+<img alt="인증샷2" src="images/review2.webp"/>
+
+<a href="https://vvd.im/행복나눔지안" target="_blank">
+  <img src="images/final_cta.webp" alt="마무리 CTA 이미지" style="width: 100%; margin-top: 30px; border-radius: 12px;">
+</a>
+
+</section>
+<section id="faq">
+<div class="section-title">자주 묻는 질문</div>
+<div class="faq-item">
+<div class="faq-question">정말 무료인가요?</div>
+<div class="faq-answer">네, 번호는 전부 무료로 드리고 있어요. 당첨되신 분들만 인증샷만 편하게 보내주시면 됩니다 😊</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">왜 이런 걸 나눠주시나요?</div>
+<div class="faq-answer">당첨의 기쁨도 함께 나누고, 결연 아동을 위한 후원도 함께 하자는 마음에서 시작했어요.</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">당첨되면 후원을 꼭 해야 하나요?</div>
+<div class="faq-answer">전혀 그런 건 없어요! 원하시는 분만 자유롭게 결연 후원에 동참해주시면 됩니다 💕</div>
+</div>
+<div class="faq-item">
+<div class="faq-question">당첨된 분들도 있나요?</div>
+<div class="faq-answer">네! 실제로 당첨되신 분들 인증샷이 후기란에 많이 올라와 있어요. 한 번 확인해보시면 아실 거예요!</div>
+</div>
+
+<div style="position: relative; width: 100%;">
+  <img src="images/final_cta.webp" alt="마무리 CTA 이미지" style="width: 100%; margin-top: 30px; border-radius: 12px;">
+  
+<a href="https://vvd.im/행복나눔지안" target="_blank"
+   style="
+     position: absolute;
+     top: 85%;
+     left: 50%;
+     width: 60%;
+     height: 10%;
+     transform: translateX(-50%);
+     display: block;
+     pointer-events: auto;
+     cursor: pointer;
+     z-index: 10;">
+</a>
+
   </a>
+</div>
 
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/2.webp" alt="2" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/3.webp" alt="3" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/4.webp" alt="4" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/5.webp" alt="5" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/6.webp" alt="6" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/7.webp" alt="7" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/8.webp" alt="8" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/9.webp" alt="9" class="landing-img" loading="lazy">
-  </a>
-
-  <a href="https://vvd.im/행복지안" target="_blank"
-     onclick="event.preventDefault(); recordClick();">
-    <img src="images/10.webp" alt="10" class="landing-img" loading="lazy">
-  </a>
-
-  <script>
-    function getOrCreateUdd() {
-      let udd = localStorage.getItem("udd");
-      if (!udd) {
-        udd = "udd_" + Math.random().toString(36).substr(2, 10);
-        localStorage.setItem("udd", udd);
+</section>
+<script src="jquery-1.11.0.min.js"></script>
+<script src="flipclock.js"></script>
+<script>
+  $(function () {
+    $('.faq-question').click(function () {
+      var $answer = $(this).next('.faq-answer');
+      if ($answer.is(':visible')) {
+        $answer.slideUp();
+      } else {
+        $('.faq-answer').slideUp();
+        $answer.slideDown();
       }
-      return udd;
-    }
-
-    const udd = getOrCreateUdd();
-
-    fetch("https://anan14.onrender.com/api/visit", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ udd })
     });
+  });
 
-    function recordClick() {
-      fetch("https://anan14.onrender.com/api/click", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ udd })
-      }).then(() => {
-        window.open('https://vvd.im/행복지안', '_blank');
-      });
-    }
-
-    function pingOnline() {
-      fetch("https://anan14.onrender.com/api/online", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ udd })
-      });
-    }
-    pingOnline();
-    setInterval(pingOnline, 5000);
-  </script>
-
+  function showClock() {
+    $('#ctaVideo').hide();
+    $('#ctaFallback').show();
+    $('.clock').FlipClock(1702, {
+      countdown: true,
+      clockFace: 'HourlyCounter'
+    });
+  }
+</script>
 </body>
 </html>

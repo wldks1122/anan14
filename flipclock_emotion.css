@@ -1,0 +1,13 @@
+/* 감성톤 FlipClock 숫자 스타일 오버라이드 */
+.flip-clock-wrapper ul li a div div.inn {
+  color: #5e5246 !important;
+  background-color: #f7f5f2 !important;
+  text-shadow: none !important;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+/* 숫자 그림자 제거 */
+.flip-clock-wrapper ul li a div .shadow {
+  display: none !important;
+}

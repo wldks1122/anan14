@@ -1,0 +1,75 @@
+/*Import Global Compulsory CSS Files*/
+@import url(app.css);
+@import url(blocks.css);
+
+/*Import CSS Plugins*/
+@import url(style-switcher.css);
+
+
+li,
+li a,
+label {
+ color: #555;
+}
+
+a {
+ color: #3298db;
+ text-decoration: none;
+}
+
+a,
+a:focus,
+a:hover,
+a:active,
+button,
+button:hover {
+	outline: 0 !important;
+}
+
+a:focus {
+text-decoration: none;
+}
+a:hover {
+ color: #3298db;
+}
+
+
+body { width:100%; padding-bottom:5%;padding:0; margin:0; }
+.wrapper { width:100%; max-width:760px; margin:0 auto; line-height:80%; }
+.wrapper .row { }
+.wrapper .row img { width:100%; line-height:0; }
+
+
+
+
+table {}
+tr { padding:0; margin:0; }
+td { font-weight:600; }
+th, td { color:#fff; letter-spacing:-0.5px;}
+
+
+
+#floating{ position:fixed; right:30px; top:30px; width:354px; z-index:99; background:white; border:1px solid #d8d8d8; opacity:0;}
+#floating .floating-close {display:block; text-align:center; color:#fff; position:absolute; top:5px; right:5px; cursor:pointer;}
+
+h1 { font-size:3rem;line-height:3.8rem;color:#fff;font-weight:600;letter-spacing:-3px; padding-bottom:2%;  }
+
+
+@media all and (max-width:767px) {
+
+table {}
+tr { padding:0; margin:0; }
+td { font-weight:600; }
+th, td { color:#fff; letter-spacing:-0.5px;}
+
+
+#floating{left:50%; top:10px; transform: translateX(-50%); width:80%; max-width:350px;}
+#floating .floating-close {display:block; text-align:center; color:#fff; position:absolute; top:5px; right:5px; cursor:pointer;}
+
+h1 { font-size:1.8rem;line-height:2.4rem;color:#fff;font-weight:600;letter-spacing:-2.5px; padding-bottom:2%;  }
+body {  padding:0; margin:0; }
+.wrapper { width:100%; max-width:760px; margin:0 auto; line-height:80%; }
+.wrapper .row img { width:100%; line-height:0; }
+
+
+}
