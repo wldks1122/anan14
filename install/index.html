@@ -1,19 +1,26 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>홈화면 추가 테스트</title>
+  <title>시그니처 645 바로가기 추가</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#ffffff" />
 </head>
-<body style="text-align: center; padding: 50px; font-family: sans-serif;">
-  <h1>행복지안</h1>
-  <p>홈화면에 추가하시면 더 쉽게 다시 방문하실 수 있어요 💜</p>
-  <button id="installAndConnect" style="padding: 12px 24px; font-size: 16px; display: none;">홈화면 추가 + 채널 연결</button>
+<body style="text-align: center; padding: 40px 20px; font-family: sans-serif; background-color: #f9f9f9;">
+  <img src="logo_ume.png" alt="Signature 645 로고" style="max-width: 220px; margin-bottom: 20px;" />
+  <h2 style="color: #222;">📲 시그니처 바로가기 추가하기</h2>
+  <p style="font-size: 16px; color: #444; margin-bottom: 30px;">
+    홈화면에 시그니처 바로가기를 추가하시면<br/>
+    매번 주소 입력 없이 바로 이동하실 수 있어요 😊<br/><br/>
+    <strong>아래 버튼을 눌러 홈화면에 추가해보세요!</strong>
+  </p>
+  <button id="installAndConnect" style="padding: 14px 28px; font-size: 16px; border: none; background-color: #d3cce3; color: #000; border-radius: 6px; cursor: pointer; display: none;">
+    ✅ 홈화면 추가 + 바로 이동
+  </button>
 
   <script>
-    // 🔧 카카오 인앱 브라우저면 삼성인터넷으로 강제 전환
     const userAgent = navigator.userAgent.toLowerCase();
     if (userAgent.includes('kakaotalk') && userAgent.includes('android')) {
       window.location.href = "intent://행복지안.com/install/#Intent;scheme=https;package=com.sec.android.app.sbrowser;end";
