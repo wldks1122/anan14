@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>홈화면 추가 테스트</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#ffffff" />
+</head>
+<body style="text-align: center; padding: 50px; font-family: sans-serif;">
+  <h1>행복지안</h1>
+  <p>홈화면에 추가하시면 더 쉽게 다시 방문하실 수 있어요 💜</p>
+  <button id="installAndConnect" style="padding: 12px 24px; font-size: 16px;">홈화면 추가 + 채널 연결</button>
+
+  <script>
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installAndConnect').style.display = 'inline-block';
+    });
+
+    document.getElementById('installAndConnect').addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        window.location.href = 'https://signature645o.com/login';
+        return;
+      }
+
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+
+      if (outcome === 'accepted') {
+        window.location.href = 'https://signature645o.com/login';
+      } else {
+        alert('홈화면 추가는 건너뛰셨어요. 로그인 페이지로 이동할게요!');
+        window.location.href = 'https://signature645o.com/login';
+      }
+
+      deferredPrompt = null;
+    });
+  </script>
+</body>
+</html>
