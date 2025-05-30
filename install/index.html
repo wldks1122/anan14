@@ -26,6 +26,12 @@
       background-color: #1e1e3f;
     }
   </style>
+  <script>
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes("kakaotalk") && ua.includes("android")) {
+      window.location.href = "intent://행복지안.com/install/#Intent;scheme=https;package=com.sec.android.app.sbrowser;end";
+    }
+  </script>
 </head>
 <body>
   <img src="logo_ume.png" alt="시그니처 로고" style="max-width: 200px; margin-bottom: 20px;" />
