@@ -1,0 +1,19 @@
+    @media (max-width: 450px) {
+      .countdown-box {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  max-width: 100%;
+  padding: 16px 24px;
+  background: #fffefc;
+  border: 6px solid #c2a080;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  white-space: nowrap;
+  overflow-x: auto;
+
+        transform: translate(-50%, -50%) scale(0.8);
+        padding: 14px 20px;
+      }
