@@ -3,7 +3,7 @@
   "name": "시그니처 육사오",
   "short_name": "시그니처",
   "start_url": "/install/",
-  "display": "minimal-ui",
+  "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#d3cce3",
   "icons": [

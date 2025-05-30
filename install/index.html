@@ -5,35 +5,78 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>시그니처 육사오</title>
-  <link rel="manifest" href="manifest_v3.json?v=3">
+  <link rel="manifest" href="manifest.json?v=4">
   <meta name="theme-color" content="#ffffff">
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       padding: 40px 20px;
-      background-color: #f8f8f8;
+      background-color: #f9f9f9;
     }
     img {
       max-width: 200px;
       margin-bottom: 20px;
     }
     h2 {
-      color: #333;
+      color: #222;
     }
     p {
       font-size: 16px;
-      color: #555;
+      color: #444;
+      margin-bottom: 30px;
+    }
+    #installAndConnect {
+      padding: 14px 28px;
+      font-size: 18px;
+      background-color: #4b3f72;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    #installAndConnect:hover {
+      background-color: #3a3161;
     }
   </style>
 </head>
 <body>
   <img src="logo_ume.png" alt="시그니처 로고">
-  <h2>📲 시그니처 육사오 바로가기</h2>
+  <h2>📲 시그니처 육사오 바로가기 추가</h2>
   <p>
-    오른쪽 상단 메뉴를 누르고<br/>
-    <strong>‘홈 화면에 추가’</strong>를 선택해주세요 😊<br/><br/>
-    앱 설치 없이 빠르게 접속할 수 있어요!
+    버튼을 눌러 홈화면에 시그니처를 설치하고<br/>
+    바로 로그인 페이지로 이동해보세요!
   </p>
+  <button id="installAndConnect">✅ 홈화면 추가 + 바로 이동</button>
+
+  <script>
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installAndConnect').style.display = 'inline-block';
+    });
+
+    document.getElementById('installAndConnect').addEventListener('click', async () => {
+      if (!deferredPrompt) {
+        window.location.href = 'https://signature645o.com/login';
+        return;
+      }
+
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+
+      if (outcome === 'accepted') {
+        window.location.href = 'https://signature645o.com/login';
+      } else {
+        alert('홈화면 추가는 건너뛰셨어요. 로그인 페이지로 이동할게요!');
+        window.location.href = 'https://signature645o.com/login';
+      }
+
+      deferredPrompt = null;
+    });
+  </script>
 </body>
 </html>
