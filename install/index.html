@@ -4,21 +4,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>시그니처 645 바로가기 추가</title>
+  <title>시그니처 육사오 바로가기</title>
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#ffffff" />
+  <style>
+    body {
+      text-align: center;
+      padding: 40px 20px;
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+    }
+    h2 {
+      color: #222;
+      margin-top: 20px;
+    }
+    p {
+      font-size: 17px;
+      color: #444;
+      margin-bottom: 30px;
+    }
+    #installAndConnect {
+      padding: 16px 30px;
+      font-size: 18px;
+      border: none;
+      background-color: #2c2c54;
+      color: #fff;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+    #installAndConnect:hover {
+      background-color: #1e1e3f;
+    }
+  </style>
 </head>
-<body style="text-align: center; padding: 40px 20px; font-family: sans-serif; background-color: #f9f9f9;">
+<body>
   <img src="logo_ume.png" alt="Signature 645 로고" style="max-width: 220px; margin-bottom: 20px;" />
-  <h2 style="color: #222;">📲 시그니처 바로가기 추가하기</h2>
-  <p style="font-size: 16px; color: #444; margin-bottom: 30px;">
-    홈화면에 시그니처 바로가기를 추가하시면<br/>
-    매번 주소 입력 없이 바로 이동하실 수 있어요 😊<br/><br/>
-    <strong>아래 버튼을 눌러 홈화면에 추가해보세요!</strong>
+  <h2>📲 시그니처 육사오 바로가기 추가</h2>
+  <p>
+    홈화면에 추가하시면 매번 주소 입력 없이<br/>
+    바로 시그니처에 접속하실 수 있어요 😊
   </p>
-  <button id="installAndConnect" style="padding: 14px 28px; font-size: 16px; border: none; background-color: #d3cce3; color: #000; border-radius: 6px; cursor: pointer; display: none;">
-    ✅ 홈화면 추가 + 바로 이동
-  </button>
+  <button id="installAndConnect">✅ 시그니처 바로가기 추가</button>
 
   <script>
     const userAgent = navigator.userAgent.toLowerCase();
@@ -31,7 +58,6 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      document.getElementById('installAndConnect').style.display = 'inline-block';
     });
 
     document.getElementById('installAndConnect').addEventListener('click', async () => {

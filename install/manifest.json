@@ -1,7 +1,7 @@
 
 {
-  "name": "행복지안",
-  "short_name": "지안",
+  "name": "시그니처 육사오",
+  "short_name": "시그니처",
   "start_url": "/install/",
   "display": "standalone",
   "background_color": "#ffffff",
