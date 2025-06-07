@@ -470,11 +470,7 @@ nav ul li a {
 </nav>
 <!-- ✅ 타이머 섹션 -->
 <section id="timer" style="position: relative; overflow: hidden;">
-  <video autoplay muted playsinline id="ctaVideo" onended="showClock()" style="width: 100%; display: block;">
-    <source src="images/cta_main.mp4" type="video/mp4">
-  </video>
-
-  <div id="ctaFallback" style="display: none; position: relative;">
+  <div id="ctaFallback" style="position: relative;">
     <!-- 📷 정지 이미지 -->
     <img src="images/cta_final.webp" alt="마지막 장면" style="width: 100%; display: block;" />
 
@@ -614,6 +610,7 @@ nav ul li a {
 <script src="flipclock.js"></script>
 <script>
   $(function () {
+    // FAQ 열고 닫기
     $('.faq-question').click(function () {
       var $answer = $(this).next('.faq-answer');
       if ($answer.is(':visible')) {
@@ -623,16 +620,14 @@ nav ul li a {
         $answer.slideDown();
       }
     });
-  });
 
-  function showClock() {
-    $('#ctaVideo').hide();
-    $('#ctaFallback').show();
+    // ✅ 시계 바로 실행
     $('.clock').FlipClock(1702, {
       countdown: true,
       clockFace: 'HourlyCounter'
     });
-  }
+  });
 </script>
+
 </body>
 </html>
