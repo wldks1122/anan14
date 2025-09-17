@@ -641,30 +641,23 @@ nav ul li a {
 </a>
 
 <script>
+  const ORIGIN = location.origin;           // 현재 페이지 도메인(유니/퓨니 자동 일치)
+  const VER = 'v1';                         // 이미지 바꿀 때만 값 변경
   Kakao.Share.createDefaultButton({
-    container: '#kakao-share-btn',
-    objectType: 'feed', // 필요시 location/list/commerce/text
-    content: {
-      title: '행복나눔 이지안',
-      description: '매주 무료 번호 10개! 늦기 전에 받아가세요 😊',
-      imageUrl: 'https://행복지안.com/images/main_banner.png',
-      link: {
-        mobileWebUrl: 'https://xn--pn3b85mbxd0op.com',
-        webUrl: 'https://xn--pn3b85mbxd0op.com'
-      }
+    container:'#kakao-share-btn',
+    objectType:'feed',
+    content:{
+      title:'행복나눔 이지안',
+      description:'매주 무료 번호 10개! 늦기 전에 받아가세요 😊',
+      imageUrl: ORIGIN + '/images/main_banner.png?' + VER,   // 캐시 버스터
+      link:{ mobileWebUrl: ORIGIN, webUrl: ORIGIN }
     },
-    buttons: [
-      {
-        title: '지금 번호 받기',
-        link: {
-          mobileWebUrl: 'https://xn--pn3b85mbxd0op.com?utm_source=kakao',
-          webUrl: 'https://xn--pn3b85mbxd0op.com?utm_source=kakao'
-        }
-      }
-    ]
+    buttons:[{
+      title:'지금 번호 받기',
+      link:{ mobileWebUrl: ORIGIN + '?utm_source=kakao', webUrl: ORIGIN + '?utm_source=kakao' }
+    }]
   });
 </script>
-
 
 
 </body>
